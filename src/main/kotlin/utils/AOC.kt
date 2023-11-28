@@ -5,9 +5,10 @@ import java.io.File
 class AOC {
     companion object {
 
-        fun getInput(day: Int): String? {
+        fun getInput(day: Int, part: Int? = null): String? {
             val dayString = day.toString().padStart(2, '0')
-            File("src/main/resources/inputs/day$dayString.txt").let { file ->
+            val path = "src/main/resources/inputs/day$dayString${if (part != null) "pt$part" else ""}.txt"
+            File(path).let { file ->
                 if (file.exists()) {
                     return file.readText()
                 } else {
@@ -16,16 +17,6 @@ class AOC {
                 }
             }
             return null
-        }
-
-        fun test(testInput: String, testOutput: String?, testFunction: (String) -> String?) {
-            val result = testFunction(testInput)
-            if (result == testOutput) {
-                println("✅ Test passed.")
-                return
-            }
-            throw Exception(
-                "Test failed.\n${"-".repeat(80)}\nExpected:\n$testOutput\n${"-".repeat(80)}\nGot:\n$result\n${"-".repeat(80)}")
         }
 
     }
