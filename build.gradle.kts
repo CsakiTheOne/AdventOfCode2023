@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
     testImplementation(kotlin("test"))
 }
 
