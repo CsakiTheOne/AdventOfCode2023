@@ -1,16 +1,25 @@
-import utils.Puzzle
 import kotlin.test.Test
 import days.*
+import utils.AOC
 
 class Days {
     @Test
-    fun day00pt1() {
-        day00pt1.test("1", 2)
-        day00pt1.solve("3")
+    fun getInputFromWebTest() {
+        val lastYearInput = AOC.getInputFromWeb(1, 2022)
+        println(lastYearInput)
+        assert(!lastYearInput.isNullOrBlank())
     }
 
     @Test
-    fun day01pt1() {
+    fun day00() {
+        val testInput = AOC.getTestInputFromFile(3) ?: ""
+        day00pt1.test(testInput, 198)
+        val input = AOC.getInputFromWeb(3, 2021) ?: ""
+        day00pt1.solve(input)
+    }
+
+    @Test
+    fun day01() {
 
     }
 }
