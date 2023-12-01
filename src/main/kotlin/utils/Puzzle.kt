@@ -1,7 +1,9 @@
 package utils
 
 class Puzzle(
-    private val code: (String) -> Any?,
+    val day: Int,
+    val part: Int,
+    val code: Puzzle.(input: String) -> Any?,
 ) {
     fun test(testInput: String, testOutput: Any?) {
         val result = code(testInput)
