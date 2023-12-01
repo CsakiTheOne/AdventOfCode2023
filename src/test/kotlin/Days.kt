@@ -11,15 +11,14 @@ class Days {
     }
 
     @Test
-    fun day00() {
-        val testInput = AOC.getTestInputFromFile(3) ?: ""
-        day00pt1.test(testInput, 198)
-        val input = AOC.getInputFromWeb(3, 2021) ?: ""
-        day00pt1.solve(input)
-    }
-
-    @Test
     fun day01() {
+        val testInput = AOC.getTestInputFromFile(1) ?: ""
+        day01pt1.test(testInput, 142)
+        val input = AOC.getInput(1) ?: ""
+        day01pt1.solve(input)
 
+        val testInput2 = AOC.getTestInputFromFile(1, 2) ?: ""
+        day01pt2.test(testInput2, 281)
+        day01pt2.solve(input)
     }
 }

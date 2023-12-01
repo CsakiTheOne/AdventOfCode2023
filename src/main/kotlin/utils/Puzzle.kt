@@ -10,8 +10,9 @@ class Puzzle(
         }
     }
 
-    fun solve(input: String) {
+    fun solve(input: String): Any? {
         val result = code(input)
         println("Solution: $result")
+        return result
     }
 }
