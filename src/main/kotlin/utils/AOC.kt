@@ -22,7 +22,7 @@ class AOC {
          */
         fun getTestInputFromFile(day: Int, part: Int? = null): String? {
             val dayString = day.toString().padStart(2, '0')
-            val partString = if (part != null) "pt$part" else ""
+            val partString = if (part != null && part != 1) "pt$part" else ""
             val path = "src/main/resources/testInputs/day$dayString$partString.txt"
             File(path).let { file ->
                 if (file.exists()) {
