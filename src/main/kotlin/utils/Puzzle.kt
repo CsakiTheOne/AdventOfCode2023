@@ -12,9 +12,13 @@ class Puzzle(
         }
     }
 
-    fun solve(input: String): Any? {
+    fun solve(input: String, expectedSolution: Any? = null) {
         val result = code(input)
         println("Solution: $result")
-        return result
+        if (expectedSolution != null) {
+            assert(result == expectedSolution) {
+                "\n${"-".repeat(80)}\nExpected:\n$expectedSolution\n${"-".repeat(80)}\nGot:\n$result\n${"-".repeat(80)}"
+            }
+        }
     }
 }
