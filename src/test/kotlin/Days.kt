@@ -13,23 +13,23 @@ class Days {
     @Test
     fun day01() {
         val testInput = AOC.getTestInputFromFile(1) ?: ""
-        day01pt1.test(testInput, 142)
+        day01.testPart1(testInput, 142)
         val input = AOC.getInput(1) ?: ""
-        day01pt1.solve(input, 54644)
+        day01.solvePart1(input, 54644)
 
         val testInput2 = AOC.getTestInputFromFile(1, 2) ?: ""
-        day01pt2.test(testInput2, 281)
-        day01pt2.solve(input, 53348)
+        day01.testPart2(testInput2, 281)
+        day01.solvePart2(input, 53348)
     }
 
     @Test
     fun day02() {
         val testInput = AOC.getTestInputFromFile(2) ?: ""
-        day02pt1.test(testInput, 8)
+        day02.testPart1(testInput, 8)
         val input = AOC.getInput(2) ?: ""
-        day02pt1.solve(input, 2061)
+        day02.solvePart1(input, 2061)
 
-        day02pt2.test(testInput, 2286)
-        day02pt2.solve(input, 72596)
+        day02.testPart2(testInput, 2286)
+        day02.solvePart2(input, 72596)
     }
 }

@@ -41,37 +41,33 @@ private data class Game(
     }
 }
 
-val day02pt1 = Puzzle(
+val day02 = Puzzle(
     day = 2,
-    part = 1,
-) { input ->
-    val games = input.lines().map { Game.fromString(it) }
+    part1 = { input ->
+        val games = input.lines().map { Game.fromString(it) }
 
-    val maxRed = 12
-    val maxGreen = 13
-    val maxBlue = 14
+        val maxRed = 12
+        val maxGreen = 13
+        val maxBlue = 14
 
-    val possibleGames = games.filter { game ->
-        game.reds.all { it <= maxRed } &&
-                game.greens.all { it <= maxGreen } &&
-                game.blues.all { it <= maxBlue }
+        val possibleGames = games.filter { game ->
+            game.reds.all { it <= maxRed } &&
+                    game.greens.all { it <= maxGreen } &&
+                    game.blues.all { it <= maxBlue }
+        }
+
+        return@Puzzle possibleGames.sumOf { it.id }
+    },
+    part2 = { input ->
+        val games = input.lines().map { Game.fromString(it) }
+
+        val powers = games.map { game ->
+            val minRed = game.reds.max()
+            val minGreen = game.greens.max()
+            val minBlue = game.blues.max()
+            minRed * minGreen * minBlue
+        }
+
+        return@Puzzle powers.sum()
     }
-
-    return@Puzzle possibleGames.sumOf { it.id }
-}
-
-val day02pt2 = Puzzle(
-    day = 2,
-    part = 2,
-) { input ->
-    val games = input.lines().map { Game.fromString(it) }
-
-    val powers = games.map { game ->
-        val minRed = game.reds.max()
-        val minGreen = game.greens.max()
-        val minBlue = game.blues.max()
-        minRed * minGreen * minBlue
-    }
-
-    return@Puzzle powers.sum()
-}
+)
