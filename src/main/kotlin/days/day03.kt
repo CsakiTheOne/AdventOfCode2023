@@ -1,13 +1,17 @@
 package days
 
 import utils.Puzzle
+import utils.Utils.Companion.expand
 
 private data class Pos(
     val line: Int,
-    val column: Int,
+    val start: Int,
+    val end: Int,
 ) {
+    val range = start..end
+
     override fun toString(): String {
-        return "(:${line + 1}:${column + 1})"
+        return "(L:$line;C:$start..$end)"
     }
 }
 
@@ -19,30 +23,15 @@ private data class EnginePart(
     val isNumber = content[0].isDigit()
     val asInt = content.toIntOrNull() ?: -1
 
-    fun getNearbyPositions(): List<Pos> {
-        val positions = mutableListOf(
-            // Left side
-            Pos(position.line, position.column - 1),
-            Pos(position.line - 1, position.column - 1),
-            Pos(position.line + 1, position.column - 1),
-            // Right side
-            Pos(position.line, position.column + content.length),
-            Pos(position.line - 1, position.column + content.length),
-            Pos(position.line + 1, position.column + content.length),
-        )
+    fun getNearbyParts(engine: List<EnginePart>): List<EnginePart> {
+        val (line, start, end) = position
 
-        for (i in content.indices) {
-            positions.add(Pos(position.line - 1, position.column + i))
-            positions.add(Pos(position.line + 1, position.column + i))
-        }
+        val nearLineParts = engine.filter { ((line - 1)..(line + 1)).contains(it.position.line) }
 
-        return positions
-    }
+        val left = nearLineParts.filter { it.position.range.expand(1).contains(start) }
+        val right = nearLineParts.filter { it.position.range.expand(1).contains(end) }
 
-    fun getNearbyPartsSimple(engine: List<EnginePart>): List<EnginePart> {
-        return getNearbyPositions().mapNotNull { pos ->
-            engine.find { it.position == pos }
-        }
+        return (left + right).distinct() - this
     }
 }
 
@@ -53,11 +42,11 @@ private fun getEngineParts(input: String): List<EnginePart> {
     lines.forEachIndexed { lineIndex, line ->
         line.forEachIndexed { columnIndex, char ->
             if (!char.isDigit()) {
-                if (char != '.') engineParts.add(EnginePart(char.toString(), Pos(lineIndex, columnIndex)))
+                if (char != '.') engineParts.add(EnginePart(char.toString(), Pos(lineIndex, columnIndex, columnIndex)))
             }
             else if (columnIndex == 0 || !line[columnIndex - 1].isDigit()) {
                 val number = Regex("""^\d+""").find(line.substring(columnIndex))?.value
-                if (number != null) engineParts.add(EnginePart(number, Pos(lineIndex, columnIndex)))
+                if (number != null) engineParts.add(EnginePart(number, Pos(lineIndex, columnIndex, columnIndex + number.length - 1)))
             }
         }
     }
@@ -68,23 +57,23 @@ private fun getEngineParts(input: String): List<EnginePart> {
 val day03 = Puzzle(
     day = 3,
     part1 = { input ->
-        val engineParts = getEngineParts(input)
+        val engine = getEngineParts(input)
 
-        val importantEngineParts = engineParts.filter { part ->
-            part.isNumber && part.getNearbyPartsSimple(engineParts).any { it.isSymbol }
+        val importantEngineParts = engine.filter { part ->
+            part.isNumber && part.getNearbyParts(engine).any { it.isSymbol }
         }
 
         return@Puzzle importantEngineParts.sumOf { it.asInt }
     },
     part2 = { input ->
-        val engineParts = getEngineParts(input)
+        val engine = getEngineParts(input)
 
-        val gears = engineParts.filter { part ->
-            part.content == "*" && engineParts.filter { it.getNearbyPartsSimple(engineParts).contains(part) }.count { it.isNumber } == 2
+        val gears = engine.filter { part ->
+            part.content == "*" && part.getNearbyParts(engine).count { it.isNumber } == 2
         }
 
         val gearRatiosSum = gears.sumOf { gear ->
-            val gearNumbers = engineParts.filter { it.getNearbyPartsSimple(engineParts).contains(gear) }
+            val gearNumbers = gear.getNearbyParts(engine).filter { it.isNumber }
             gearNumbers[0].asInt * gearNumbers[1].asInt
         }
 
