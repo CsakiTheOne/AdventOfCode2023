@@ -16,19 +16,15 @@ This repository contains my solutions for the [Advent of Code 2023](https://adve
 ```kt
 import utils.Puzzle
 
-val dayXXpt1 = Puzzle(
+val dayXX = Puzzle(
     day = X,
-    part = 1,
-) { input ->
-    // Solve part 1 here
-}
-
-val dayXXpt2 = Puzzle(
-    day = X,
-    part = 2,
-) { input ->
-    // Solve part 2 here
-}
+    part1 = { input ->
+        // Solve part 1 here
+    },
+    part2 = { input ->
+        // Solve part 2 here
+    },
+)
 ```
 
 - [ ] Add the tests for the day in the [Days file](./src/test/kotlin/Days.kt)
@@ -37,12 +33,12 @@ val dayXXpt2 = Puzzle(
 @Test
 fun dayXX() {
     val testInput = AOC.getTestInputFromFile(X) ?: ""
-    dayXXpt1.test(testInput, X)
+    dayXX.testPart1(testInput, X)
     val input = AOC.getInput(X) ?: ""
-    dayXXpt1.solve(input)
+    dayXX.solvePart1(input)
 
     val testInput2 = AOC.getTestInputFromFile(X, 2) ?: ""
-    dayXXpt2.test(testInput2, X)
-    dayXXpt2.solve(input)
+    dayXX.testPart2(testInput2, X)
+    dayXX.solvePart2(input)
 }
 ```
