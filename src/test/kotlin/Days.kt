@@ -43,4 +43,15 @@ class Days {
         day03.testPart2(testInput, 467835)
         day03.solvePart2(input, 89471771)
     }
+
+    @Test
+    fun day04() {
+        val testInput = AOC.getTestInputFromFile(4) ?: ""
+        day04.testPart1(testInput, 13)
+        val input = AOC.getInput(4) ?: ""
+        day04.solvePart1(input, 25231)
+
+        day04.testPart2(testInput, 30)
+        day04.solvePart2(input, 9721255)
+    }
 }
