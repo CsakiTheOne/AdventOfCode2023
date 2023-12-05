@@ -18,6 +18,19 @@ private data class Converter(
         }
         return input - sourceRangeStart + destinationRangeStart
     }
+
+    fun convertRange(input: LongRange): Set<LongRange> {
+        val validRange = source.intersect(input)
+        val invalidRange = source.subtract(input)
+        if (validRange.isEmpty()) {
+            return setOf(input)
+        }
+        val convertedRange = validRange.map { convert(it) }
+        return setOf(
+            convertedRange.first()..convertedRange.last(),
+            invalidRange.first()..invalidRange.last(),
+        )
+    }
 }
 
 val day05 = Puzzle(
@@ -82,31 +95,51 @@ val day05 = Puzzle(
         return@Puzzle locations.min()
     },
     part2 = { input ->
-        //TODO: Rewrite! Only a quantum computer could run this.
-
         val seedRangeValues = input
             .lines()
             .first()
             .removePrefix("seeds: ")
             .split(" ")
             .map { it.toLong() }
-
         val seedRangeStarts = seedRangeValues
             .filterIndexed { index, _ -> index % 2 == 0 }
         val seedRangeLengths = seedRangeValues
             .filterIndexed { index, _ -> index % 2 == 1 }
-
         val seedRanges = seedRangeStarts
             .zip(seedRangeLengths)
             .map { it.first..<(it.first + it.second) }
+        val converters = mutableListOf<Converter>()
 
-        println(seedRanges)
+        val inputChunks = input
+            .split("\n\n", "\r\n\r\n")
+            .drop(1)
 
-        val newInput = input
-            .replace("seeds: ${seedRangeValues.joinToString(" ")}", "seeds: ${seedRanges.flatten().joinToString(" ")}")
+        inputChunks.forEach { chunk ->
+            val lines = chunk.lines()
+            val (sourceName, _, destinationName) = lines.first().split("-", " ")
+            lines
+                .drop(1)
+                .filter { it.isNotBlank() }
+                .forEach { line ->
+                    val (destinationStart, sourceStart, length) = line
+                        .split(" ")
+                        .mapNotNull { it.trim().toLongOrNull() }
+                    converters.add(
+                        Converter(
+                            sourceName,
+                            destinationName,
+                            sourceStart,
+                            destinationStart,
+                            length,
+                        )
+                    )
+                }
+        }
 
-        println("New first line: ${newInput.lines().first()}")
+        if (converters.isEmpty()) {
+            throw Exception("Failed to create converters")
+        }
 
-        return@Puzzle part1(newInput)
+        return@Puzzle 0//part1(newInput)
     },
 )
