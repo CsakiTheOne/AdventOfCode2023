@@ -12,7 +12,7 @@ class Puzzle(
         }
     }
 
-    fun solvePart1(input: String, expectedSolution: Any? = null) {
+    fun solvePart1(input: String, expectedSolution: Any? = null): Any? {
         val result = part1(input)
         println("Solution: $result")
         if (expectedSolution != null) {
@@ -20,6 +20,7 @@ class Puzzle(
                 "\n${"-".repeat(80)}\nExpected:\n$expectedSolution\n${"-".repeat(80)}\nGot:\n$result\n${"-".repeat(80)}"
             }
         }
+        return result
     }
 
     fun testPart2(testInput: String, testOutput: Any?) {
@@ -29,7 +30,7 @@ class Puzzle(
         }
     }
 
-    fun solvePart2(input: String, expectedSolution: Any? = null) {
+    fun solvePart2(input: String, expectedSolution: Any? = null): Any? {
         val result = part2(input)
         println("Solution: $result")
         if (expectedSolution != null) {
@@ -37,5 +38,6 @@ class Puzzle(
                 "\n${"-".repeat(80)}\nExpected:\n$expectedSolution\n${"-".repeat(80)}\nGot:\n$result\n${"-".repeat(80)}"
             }
         }
+        return result
     }
 }
