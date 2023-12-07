@@ -76,4 +76,16 @@ class Days {
         day06.testPart2(testInput, 71503L + 1L)
         day06.solvePart2(input, 32583852L)
     }
+
+    @Test
+    fun day07() {
+        val testInput = AOC.getTestInputFromFile(7) ?: ""
+        day07.testPart1(testInput, 6440)
+        val input = AOC.getInput(7) ?: ""
+        day07.solvePart1(input, 252656917)
+
+        day07.testPart2(testInput, 5905L)
+        val result = day07.solvePart2(input) as Long
+        assert(result > 253040090L && result != 253371374L)
+    }
 }
