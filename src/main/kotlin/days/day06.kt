@@ -1,6 +1,11 @@
 package days
 
 import utils.Puzzle
+import java.lang.Math.pow
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
+import kotlin.math.sqrt
 
 private data class Race(
     val duration: Int,
@@ -16,6 +21,10 @@ private class Boat {
         fun isWinningRace(race: Race, chargingTime: Int): Boolean {
             return move(race, chargingTime) > race.recordDistance
         }
+
+        // (duration - chargingTime) * chargingTime = recordDistance
+        // chargingTime^2 - duration * chargingTime + recordDistance = 0
+        // chargingTime = (duration +- sqrt(duration^2 - 4 * recordDistance)) / 2
     }
 }
 
@@ -44,6 +53,11 @@ val day06 = Puzzle(
         val time = lines[0].substringAfter("Time:").replace(" ", "").toLong()
         val distance = lines[1].substringAfter("Distance:").replace(" ", "").toLong()
         println("time: $time, distance: $distance")
-        return@Puzzle 0
+        val minChargingTime = (time - sqrt(time.toDouble().pow(2) - 4.0 * distance)) / 2.0
+        val maxChargingTime = (time + sqrt(time.toDouble().pow(2) - 4.0 * distance)) / 2.0
+        println("minChargingTime: $minChargingTime, maxChargingTime: $maxChargingTime")
+        val chargeTimes = maxChargingTime - minChargingTime + 1
+        println("chargeTimes: $chargeTimes")
+        return@Puzzle chargeTimes.toLong()
     },
 )

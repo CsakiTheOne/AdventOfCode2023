@@ -95,6 +95,7 @@ val day05 = Puzzle(
         return@Puzzle locations.min()
     },
     part2 = { input ->
+        //TODO: Day 5 part 2
         val seedRangeValues = input
             .lines()
             .first()

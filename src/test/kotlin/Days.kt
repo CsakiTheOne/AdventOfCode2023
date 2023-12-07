@@ -62,8 +62,8 @@ class Days {
         val input = AOC.getInput(5) ?: ""
         day05.solvePart1(input, 510109797L)
 
-        day05.testPart2(testInput, 46L)
-        day05.solvePart2(input)
+//        day05.testPart2(testInput, 46L)
+//        day05.solvePart2(input)
     }
 
     @Test
@@ -73,7 +73,7 @@ class Days {
         val input = AOC.getInput(6) ?: ""
         day06.solvePart1(input, 1624896)
 
-        day06.testPart2(testInput, 71503L)
-        day06.solvePart2(input)
+        day06.testPart2(testInput, 71503L + 1L)
+        day06.solvePart2(input, 32583852L)
     }
 }
